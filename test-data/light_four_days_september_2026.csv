@@ -1,0 +1,7 @@
+Subject,Start Date,Start Time,End Date,End Time,All Day Event,Description,Location,Private
+Team check-in,09/14/2026,10:00 AM,09/14/2026,10:30 AM,False,Weekly team update,Office,False
+Dentist appointment,09/14/2026,03:00 PM,09/14/2026,04:00 PM,False,Routine appointment,City clinic,True
+Project review,09/15/2026,01:00 PM,09/15/2026,02:00 PM,False,Review current project,Online,False
+Lunch with Sam,09/16/2026,12:00 PM,09/16/2026,01:00 PM,False,Catch up over lunch,Cafe,True
+Client call,09/17/2026,09:30 AM,09/17/2026,10:15 AM,False,Project status call,Online,False
+Evening class,09/17/2026,06:30 PM,09/17/2026,08:00 PM,False,Weekly class,Community centre,True

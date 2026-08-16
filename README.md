@@ -1,75 +1,122 @@
-# React + TypeScript + Vite
+# JoyFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+JoyFlow is a wellness-focused calendar optimiser created by **Eunice Adeniyi** for the **CS Girlies Annual Hackathon — Technology for Wellness**.
 
-Currently, two official plugins are available:
+It imports calendar commitments from `.ics` or `.csv` files, combines them with the user’s desires and focus areas, and produces a more rounded weekly plan. Fixed commitments remain in place while JoyFlow looks for comfortable openings for activities such as exercise, cooking, rest, hobbies, and time with friends or family.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Inspiration
 
-## React Compiler
+Twenty-four hours can seem like a long time until midnight arrives and important areas of life have been unintentionally ignored. This is common for students and working professionals: work and business commitments enter the calendar first, while activities that support health, relationships, and enjoyment are left unscheduled.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+JoyFlow treats those personal priorities as worthy of calendar space too.
 
-## Expanding the ESLint configuration
+## Core features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Email and password authentication with account-specific data.
+- One-time onboarding for personal focus areas.
+- `.ics` and `.csv` calendar import.
+- Natural-language desire capture.
+- Seven-day schedule generation in Stockholm time.
+- Fixed calendar commitments remain unchanged.
+- Proposed activities are placed in comfortable morning, afternoon, or evening openings.
+- Breathing room is maintained around existing commitments.
+- Concise weekly insights explain scheduling decisions and suggest improvements.
+- Responsive layouts for mobile, tablet, and desktop.
+- Supabase Row Level Security protects user data.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## How AI is used
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+JoyFlow uses AI in two different ways:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Development assistant
 
+- **Tool:** Codex
+- **Model:** 5.6 Sol
+- **Reasoning level:** Low
+- **Tier:** Paid
+
+The project concept, requirements, UI direction, architecture, and database design were directed by the project author. Codex assisted with implementation and testing.
+
+### AI inside the product
+
+Supabase Edge Functions call **OpenAI `gpt-5.4-nano`** to:
+
+- Convert natural-language desires into schedulable activities.
+- Compare desires and focus areas with fixed commitments.
+- Explain important scheduling decisions or compromises.
+- Provide short, practical weekly suggestions.
+
+The OpenAI key is stored as a Supabase Edge Function secret and is never exposed to the React frontend.
+
+## Technology
+
+- **Frontend:** React, TypeScript, Tailwind CSS
+- **Build tool:** Vite
+- **Backend:** Supabase
+- **Database:** Supabase PostgreSQL
+- **Authentication:** Supabase Auth
+- **AI:** OpenAI through Supabase Edge Functions
+- **Deployment:** Vercel
+- **Version control:** Git and GitHub
+
+## Local setup
+
+### 1. Install dependencies
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Configure frontend environment variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Copy `.env.example` to `.env.local` and provide the public values from the Supabase project settings:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-public-anon-key
 ```
+
+Never place the OpenAI API key in a `VITE_` environment variable.
+
+### 3. Apply the database migrations
+
+Run the SQL files in `supabase/migrations` in filename order, or push them with the linked Supabase CLI:
+
+```bash
+npx supabase db push
+```
+
+### 4. Configure and deploy the AI functions
+
+```bash
+npx supabase secrets set OPENAI_API_KEY=your-openai-api-key
+npx supabase functions deploy interpret-task
+npx supabase functions deploy analyze-week
+```
+
+### 5. Start the application
+
+```bash
+npm run dev
+```
+
+## Quality checks
+
+```bash
+npm run lint
+npm run build
+```
+
+## Vercel deployment
+
+1. Push the repository to GitHub and import it into Vercel.
+2. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to the Vercel project environment variables.
+3. Use `npm run build` as the build command and `dist` as the output directory.
+4. Add the deployed URL to the Supabase Authentication Site URL and allowed redirect URLs.
+
+The included `vercel.json` sends React Router paths back to `index.html`, allowing routes such as `/dashboard` and `/weekly-plan` to work after a refresh.
+
+## Hackathon tracks
+
+- Technology for Wellness
+- Best Use of AI

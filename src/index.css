@@ -1,1 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
+
+:root {
+  /* JoyFlow design tokens: change these values to update the app globally. */
+  --color-background: #f8f7f3;
+  --color-surface: #ffffff;
+  --color-primary: #789a81;
+  --color-primary-dark: #5f8068;
+  --color-primary-soft: #edf3ee;
+  --color-action: #26342d;
+  --color-action-hover: #17231d;
+  --color-on-primary: #ffffff;
+  --color-text: #25302a;
+  --color-text-muted: #6d746f;
+  --color-text-soft: #929791;
+  --color-border: #dedfd9;
+  --color-border-subtle: #ecece7;
+  --color-focus: #a9c6b0;
+
+  --radius-small: 9px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+  --shadow-card: 0 18px 45px rgb(38 52 45 / 6%);
+
+  color: var(--color-text);
+  background: var(--color-background);
+  font-family: 'DM Sans', sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--color-background);
+}
